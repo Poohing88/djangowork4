@@ -18,8 +18,7 @@ def read_csv():
             date = datetime.strptime(date, '%Y%m%d')
             lte = line[5]
             slug = slugify(name)
-            # info = {'Название': name, 'Изображение': image, 'Цена': price,
-            #         'Дата выхода': date, 'Есть ли технология lte': lte}
-            info = [name, image, price, date, lte, slug]
+            info = {'Название': name, 'Изображение': image, 'Цена': price,
+                    'Дата_выхода': date, 'Технология_lte': lte, 'slug': slug}
             phones_viev.append(info)
         return phones_viev
