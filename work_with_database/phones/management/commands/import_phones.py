@@ -15,7 +15,6 @@ class Command(BaseCommand):
             phone_reader = csv.reader(csvfile, delimiter=';')
             # пропускаем заголовок
             next(phone_reader)
-            phones_viev = []
             for line in phone_reader:
                 name = line[1]
                 image = line[2]
@@ -26,8 +25,5 @@ class Command(BaseCommand):
                 slug = slugify(name)
                 phones = Phone(name=name, image=image, price=price, release_date=date, lte_exists=lte, slug=slug)
                 phones.save()
-                phones_viev.append(phones)
-                # TODO: Добавьте сохранение модели
-            return phones_viev
 
 

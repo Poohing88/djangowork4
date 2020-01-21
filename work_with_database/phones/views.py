@@ -1,19 +1,22 @@
 from operator import itemgetter
 
 from django.shortcuts import render
-from phones.read_csv import read_csv
-
-
+from phones.models import Phone
 
 
 def show_catalog(request):
     template = 'catalog.html'
     sort = request.GET.get('sort')
-    info = read_csv()
+    information = Phone.objects.all()
+    info = []
+    for i in information:
+        read_dick = {'Название': i.name, 'Изображение': i.image, 'Цена': i.price,
+                     'Дата_выхода': i.release_date, 'Технология_lte': i.lte_exists, 'slug': i.slug}
+        info.append(read_dick)
     if sort == 'name':
-        info = info.sort(key=itemgetter('Название'))
+        info.sort(key=itemgetter('Название'))
     elif sort == 'min_price':
-        info = info.sort(key=itemgetter('Цена'))
+        info.sort(key=itemgetter('Цена'))
     else:
         info = info
     context = {'info': info}
@@ -21,13 +24,14 @@ def show_catalog(request):
 
 
 def show_product(request, slug):
-    template = f'{slug}.html'
-    info = read_csv()
-    telefon = str()
-    for i in info:
-        if i['slug'] == slug:
-            telefon = i
-        else:
-            telefon = None
-    context = {"info": telefon}
+    template = 'product.html'
+    information = Phone.objects.all()
+    info = {}
+    for i in information:
+        read_dick = {'Название': i.name, 'Изображение': i.image, 'Цена': i.price,
+                     'Дата_выхода': i.release_date, 'Технология_lte': i.lte_exists, 'slug': i.slug}
+        if read_dick['slug'] == slug:
+            info = read_dick
+    context = {"info": info}
     return render(request, template, context)
+
